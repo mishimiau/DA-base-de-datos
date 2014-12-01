@@ -1,0 +1,99 @@
+CREATE DATABASE ELCAMPEON;
+USE ELCAMPEON;
+
+
+create table productos(
+	idproducto int primary key,
+	nombreProducto varchar(40),
+	idProveedor bigint null,	
+	idCategoria int null,	
+	idcolor int null,
+	idmarca int null,	
+	precioUnidad decimal null,
+	cantidad int	
+	
+);
+
+create table color(
+	idcolor int primary key,
+	nombrecolor varchar(max)
+)
+create table proveedores(
+	idProveedor bigint primary key,	
+	nombreProveedor varchar(max),
+	telefono varchar(24),
+	paginaprincipal text
+);
+
+create table categorias(
+	idcategoria int primary key ,
+	nomCat varchar(100) not null,	
+		
+	
+);
+
+create table marca(
+	idmarca int primary key,
+	nombremarca varchar(max),
+        cate varchar(30)
+);
+
+
+create table cliente(
+	DNI bigint primary key,
+	nombre varchar(max) 
+);
+create table Pedidos(
+	idPedido bigint primary key,
+	DNI bigint not null,
+	FechaPedido date,		
+	Cargo decimal,
+	total decimal,
+);
+
+create table detallesdepedidos(
+	idpedido bigint ,
+	idproducto int,	
+	cantidad int not null,
+	
+);
+
+
+
+alter table  detallesdepedidos
+  add constraint fk_pedidos
+  foreign key (idpedido)
+  references pedidos (idpedido);
+
+alter table pedidos 
+  add constraint fk_cliente
+  foreign key (DNI)
+  references cliente (DNI);
+
+alter table detallesdepedidos
+  add constraint fk_detalle
+  foreign key (idproducto)
+  references productos (idproducto);
+
+
+alter table productos
+  add constraint fk_4
+  foreign key (idcolor)
+  references color(idcolor);
+
+
+
+alter table productos
+  add constraint fk_1
+  foreign key (idmarca)
+  references marca (idmarca);
+
+alter table productos
+  add constraint fk_2
+  foreign key (idcategoria)
+  references categorias (idcategoria);
+
+alter table productos
+  add constraint fk_3
+  foreign key (idProveedor)
+  references proveedores(idProveedor);
